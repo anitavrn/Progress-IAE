@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Detail Buku</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="detail-page">
+  <div class="detail-card">
+
+    <!-- JUDUL -->
+    <h1 class="detail-title" id="title">Memuat...</h1>
+
+    <!-- COVER -->
+    <div class="cover-wrapper">
+      <img id="cover" alt="Cover Buku">
+    </div>
+
+    <!-- INFO -->
+    <div class="info-row">
+      <div class="info-box">
+        <span>Author</span>
+        <strong id="author">-</strong>
+      </div>
+      <div class="info-box">
+        <span>Kategori</span>
+        <strong id="category">Fiksi</strong>
+      </div>
+      <div class="info-box">
+        <span>Denda / Hari</span>
+        <strong>Rp 1.000</strong>
+      </div>
+    </div>
+
+    <!-- SINOPSIS -->
+    <div class="synopsis-box">
+      <h3>Sinopsis</h3>
+      <p id="description">Memuat...</p>
+    </div>
+
+    <!-- BUTTON -->
+    <div class="action-row">
+      <button class="btn-back" onclick="history.back()">← Kembali</button>
+      <button class="btn-borrow" onclick="pinjam()">📚 Pinjam</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const workId = params.get("id");
+const authorParam = params.get("author");
+
+// TAMPILKAN AUTHOR DARI URL (INI YANG PENTING)
+document.getElementById("author").innerText =
+  authorParam ? decodeURIComponent(authorParam) : "-";
+
+let bookData = {};
+
+// FETCH DETAIL BUKU
+fetch(`https://openlibrary.org/works/${workId}.json`)
+  .then(res => res.json())
+  .then(data => {
+    bookData = data;
+
+    document.getElementById("title").innerText = data.title;
+
+    document.getElementById("description").innerText =
+      typeof data.description === "string"
+        ? data.description
+        : data.description?.value ?? "Tidak ada sinopsis";
+
+    if (data.covers?.length) {
+      document.getElementById("cover").src =
+        `https://covers.openlibrary.org/b/id/${data.covers[0]}-L.jpg`;
+    }
+  });
+
+// PINJAM
+function pinjam() {
+  localStorage.setItem("borrowBook", JSON.stringify({
+    id: workId,
+    title: bookData.title
+  }));
+  window.location.href = "borrow-form.html";
+}
+</script>
+
+</body>
+</html>

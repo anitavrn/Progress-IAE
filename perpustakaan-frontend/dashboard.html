@@ -1,52 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Member</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
 <body>
-   <link rel="stylesheet" href="css/style.css">
-  <div class="dashboard-wrapper">
 
-    <header class="dashboard-header">
-      <h1>Dashboard Member</h1>
-      <p>Selamat datang di Sistem Perpustakaan</p>
-    </header>
-
-    <div class="dashboard-cards">
-
-      <div class="dashboard-card" onclick="location.href='books.html'">
-        <span class="icon">📚</span>
-        <h3>Cari Buku</h3>
-        <p>Mencari dan melihat katalog buku</p>
-      </div>
-
-      <div class="dashboard-card" onclick="location.href='borrow.html'">
-        <span class="icon">📝</span>
-        <h3>Ajukan Peminjaman</h3>
-        <p>Form pengajuan peminjaman buku</p>
-      </div>
-
-      <div class="dashboard-card" onclick="location.href='transactions.html'">
-        <span class="icon">📖</span>
-        <h3>Riwayat Peminjaman</h3>
-        <p>Melihat status dan histori peminjaman</p>
-      </div>
-
-      <div class="dashboard-card" onclick="location.href='return.html'">
-        <span class="icon">🔄</span>
-        <h3>Pengembalian Buku</h3>
-        <p>Ajukan pengembalian buku</p>
-      </div>
-
-      <div class="dashboard-card" onclick="location.href='fine.html'">
-        <span class="icon">💰</span>
-        <h3>Denda</h3>
-        <p>Melihat dan membayar denda</p>
-      </div>
-
-      <div class="dashboard-card logout" onclick="logout()">
-        <span class="icon">🚪</span>
-        <h3>Logout</h3>
-        <p>Keluar dari sistem</p>
-      </div>
-
-    </div>
+<!-- ================= TOP BAR ================= -->
+<div class="topbar">
+  <div class="profile-wrapper" onclick="toggleProfile()">
+    <div class="profile-avatar">👤</div>
   </div>
 
-  <script src="js/api.js"></script>
+  <!-- PROFILE DROPDOWN -->
+  <div class="profile-dropdown" id="profileDropdown">
+    <p class="profile-role">Member</p>
+    <p class="profile-email" id="profileEmail">email@mail.com</p>
+    <button class="btn-logout" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<!-- ================= DASHBOARD ================= -->
+<div class="dashboard-wrapper">
+
+  <header class="dashboard-header">
+  <h1>Dashboard Member</h1>
+  <p id="welcomeName" class="welcome-name"></p>
+  <p class="welcome-subtext">
+    Selamat datang di Sistem Perpustakaan 📚
+  </p>
+  </header>
+
+  <div class="dashboard-cards">
+
+    <div class="dashboard-card" onclick="location.href='books.html'">
+      <span class="icon">📚</span>
+      <h3>Cari Buku</h3>
+      <p>Mencari dan melihat katalog buku</p>
+    </div>
+
+    <div class="dashboard-card" onclick="location.href='borrow-history.html'">
+      <span class="icon">📖</span>
+      <h3>Riwayat Peminjaman</h3>
+      <p>Melihat status dan histori peminjaman</p>
+    </div>
+
+    <div class="dashboard-card" onclick="location.href='return.html'">
+      <span class="icon">🔄</span>
+      <h3>Pengembalian Buku</h3>
+      <p>Ajukan pengembalian buku</p>
+    </div>
+
+    <div class="dashboard-card" onclick="location.href='fine.html'">
+      <span class="icon">💰</span>
+      <h3>Denda</h3>
+      <p>Melihat dan membayar denda</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+/* ================= AUTH CHECK (ANTI KEDIP) ================= */
+const token = localStorage.getItem("token");
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+if (!token || !currentUser) {
+  window.location.href = "login.html";
+}
+
+/* ================= TAMPILKAN USER ================= */
+document.getElementById("welcomeName").innerText =
+  `Hai, ${currentUser.name} 👋`;
+
+document.getElementById("profileEmail").innerText =
+  currentUser.email;
+
+/* ================= DROPDOWN ================= */
+function toggleProfile() {
+  const dropdown = document.getElementById("profileDropdown");
+  dropdown.style.display =
+    dropdown.style.display === "block" ? "none" : "block";
+}
+
+/* Klik luar menutup dropdown */
+document.addEventListener("click", function (e) {
+  if (!e.target.closest(".topbar")) {
+    document.getElementById("profileDropdown").style.display = "none";
+  }
+});
+
+/* ================= LOGOUT ================= */
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("currentUser");
+  window.location.href = "login.html";
+}
+</script>
+
 </body>
+</html>

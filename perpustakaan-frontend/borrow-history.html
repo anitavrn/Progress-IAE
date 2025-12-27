@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Riwayat Peminjaman</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="borrow-page">
+  <div class="borrow-card" style="width:650px">
+
+    <h2 class="borrow-title">📚 Riwayat Peminjaman</h2>
+
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Judul Buku</th>
+          <th>Tanggal Pinjam</th>
+          <th>Tanggal Kembali</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="historyBody">
+        <tr>
+          <td colspan="4" style="text-align:center">Memuat data...</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="action-row">
+      <button class="btn-back" onclick="window.location.href='dashboard.html'">
+        ← Kembali ke Dashboard
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ================= AUTH CHECK ================= */
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+if (!currentUser) {
+  window.location.href = "login.html";
+}
+
+/* ================= LOAD DATA PER USER ================= */
+const key = `borrowHistory_${currentUser.email}`;
+const history = JSON.parse(localStorage.getItem(key)) || [];
+
+const historyBody = document.getElementById("historyBody");
+historyBody.innerHTML = "";
+
+if (history.length === 0) {
+  historyBody.innerHTML = `
+    <tr>
+      <td colspan="4" style="text-align:center">
+        Belum ada riwayat peminjaman
+      </td>
+    </tr>
+  `;
+} else {
+  history.forEach(item => {
+    historyBody.innerHTML += `
+      <tr>
+        <td>${item.title}</td>
+        <td>${item.borrowDate}</td>
+        <td>${item.returnDate}</td>
+        <td>${item.status}</td>
+      </tr>
+    `;
+  });
+}
+</script>
+
+</body>
+</html>

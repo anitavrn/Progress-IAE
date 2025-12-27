@@ -15,23 +15,25 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed'
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role' => 'member',
             'password' => Hash::make($request->password),
         ]);
 
         return response()->json([
-            'message' => 'User registered successfully'
+            'message' => 'Register berhasil',
+            'user' => $user
         ], 201);
     }
 
     // =======================
-    // LOGIN (SANCTUM)
+    // LOGIN
     // =======================
     public function login(Request $request)
 {
@@ -44,19 +46,26 @@ class AuthController extends Controller
 
     if (!$user || !Hash::check($request->password, $user->password)) {
         return response()->json([
-            'message' => 'Login gagal'
+            'message' => 'Email atau password salah'
         ], 401);
     }
 
-    // hapus token lama (opsional tapi rapi)
+    // hapus token lama
     $user->tokens()->delete();
 
     // buat token baru
     $token = $user->createToken('frontend')->plainTextToken;
 
     return response()->json([
-        'token' => $token
-    ]);
+        'token' => $token,
+        'user' => [
+            'id'        => $user->id,
+            'name'      => $user->name,
+            'username'  => $user->username,
+            'email'     => $user->email,
+            'role'      => $user->role ?? 'member'
+        ]
+    ], 200);
 }
 
     // =======================

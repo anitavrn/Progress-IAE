@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Peminjaman</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="borrow-page">
+  <div class="borrow-card">
+
+    <h2 class="borrow-title">Form Peminjaman</h2>
+
+    <form id="borrowForm">
+      <label>Judul Buku</label>
+      <input type="text" id="bookTitle" readonly>
+
+      <label>Tanggal Pinjam</label>
+      <input type="date" id="borrowDate" required>
+
+      <label>Tanggal Kembali</label>
+      <input type="date" id="returnDate" required>
+
+      <div class="action-row">
+        <button type="button" class="btn-back" onclick="history.back()">← Batal</button>
+        <button type="submit" class="btn-borrow">📚 Submit</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+/* ================= AUTH CHECK ================= */
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+if (!currentUser) {
+  window.location.href = "login.html";
+}
+
+/* ================= AMBIL DATA BUKU ================= */
+const bookData = JSON.parse(localStorage.getItem("borrowBook"));
+if (!bookData) {
+  Swal.fire({
+    icon: "error",
+    title: "Data tidak ditemukan",
+    text: "Silakan pilih buku terlebih dahulu"
+  }).then(() => window.location.href = "books.html");
+}
+
+document.getElementById("bookTitle").value = bookData.title;
+
+/* ================= SUBMIT ================= */
+document.getElementById("borrowForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const borrowDate = document.getElementById("borrowDate").value;
+  const returnDate = document.getElementById("returnDate").value;
+
+  if (!borrowDate || !returnDate) {
+    Swal.fire({
+      icon: "warning",
+      title: "Form belum lengkap",
+      text: "Tanggal pinjam dan kembali wajib diisi"
+    });
+    return;
+  }
+
+  if (returnDate < borrowDate) {
+    Swal.fire({
+      icon: "error",
+      title: "Tanggal tidak valid",
+      text: "Tanggal kembali tidak boleh sebelum tanggal pinjam"
+    });
+    return;
+  }
+
+  /* ================= SIMPAN PER USER ================= */
+  const key = `borrowHistory_${currentUser.email}`;
+  const history = JSON.parse(localStorage.getItem(key)) || [];
+
+  history.push({
+    title: bookData.title,
+    borrowDate,
+    returnDate,
+    status: "Dipinjam"
+  });
+
+  localStorage.setItem(key, JSON.stringify(history));
+
+  Swal.fire({
+    icon: "success",
+    title: "Peminjaman Berhasil 🎉",
+    confirmButtonText: "Lihat Riwayat"
+  }).then(() => {
+    window.location.href = "borrow-history.html";
+  });
+});
+</script>
+
+</body>
+</html>

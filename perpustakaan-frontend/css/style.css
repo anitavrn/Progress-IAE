@@ -5,6 +5,152 @@ body {
   background: linear-gradient(135deg, #ffd1e8, #e0f0ff);
   height: 100vh;
 }
+/* ================= TOP BAR ================= */
+.topbar {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 1000;
+}
+
+.profile-wrapper {
+  cursor: pointer;
+}
+
+.profile-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff9acb, #b9d6ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* ================= DROPDOWN ================= */
+.profile-dropdown {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  display: none;
+  animation: fadeSlide 0.25s ease forwards;
+}
+
+.profile-card {
+  width: 230px;
+  background: white;
+  border-radius: 16px;
+  padding: 18px 16px;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+}
+
+.profile-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #f3f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  margin: 0 auto 10px;
+}
+
+.profile-role {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.profile-email {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 14px;
+  word-break: break-all;
+}
+
+/* ================= LOGOUT BUTTON ================= */
+.btn-logout {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #ff4d4f;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: #e6393b;
+}
+
+/* ================= ANIMATION ================= */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Avatar */
+.profile-avatar {
+  width: 44px;
+  height: 44px;
+  background: white;
+  border-radius: 50%;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Dropdown */
+.profile-dropdown {
+  display: none;
+  position: absolute;
+  top: 55px;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  width: 180px;
+  padding: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.profile-dropdown p {
+  margin: 0 0 10px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Logout Button */
+.btn-logout {
+  width: 100%;
+  border: none;
+  padding: 10px;
+  background: #ff4d4f;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-logout:hover {
+  background: #d9363e;
+}
+
 
 /* wrapper center */
 .login-wrapper {
@@ -22,6 +168,23 @@ body {
   border-radius: 16px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
   text-align: center;
+}
+
+.login-register-text {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.login-register-text a {
+  color: #ff6fae;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-register-text a:hover {
+  text-decoration: underline;
 }
 
 /* judul */
@@ -205,4 +368,401 @@ body {
 
 .btn-back:hover {
   background: #ccc;
+}
+
+
+* {
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f7f7f7;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  background: #e8e1c9;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* CONTAINER */
+.container {
+  padding: 20px;
+  text-align: center;
+}
+
+/* COVER */
+.cover-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.book-cover {
+  width: 160px;
+  border-radius: 12px;
+}
+
+/* INFO */
+.book-title {
+  margin: 10px 0 5px;
+}
+
+.book-author,
+.book-publisher {
+  color: #666;
+  margin: 2px 0;
+}
+
+/* TAB */
+.tab {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+  color: #888;
+}
+
+.tab .active {
+  color: black;
+  border-bottom: 2px solid black;
+}
+
+/* INFO BOX */
+.info-box {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.box {
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100px;
+}
+
+/* BOTTOM BAR */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background: white;
+}
+
+.borrow-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 25px;
+  background: #4caf82;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* FORM */
+.borrow-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.borrow-form input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.submit-btn {
+  margin-top: 15px;
+  padding: 12px;
+  border: none;
+  border-radius: 20px;
+  background: #4caf82;
+  color: white;
+  font-size: 16px;
+}
+
+/* ===============================
+   BOOK DETAIL PAGE
+================================ */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffd6e8, #f3e7ff);
+}
+
+.detail-page {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.detail-card {
+  width: 100%;
+  max-width: 900px;
+  background: #fde6f2;
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.12);
+}
+
+/* Judul */
+.detail-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Cover */
+.cover-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.cover-wrapper img {
+  width: 220px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.25);
+}
+
+/* Info Row */
+.info-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.info-box {
+  flex: 1;
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.info-box span {
+  font-size: 12px;
+  color: #999;
+  letter-spacing: 0.5px;
+}
+
+.info-box strong {
+  margin-top: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+
+/* Sinopsis */
+.synopsis-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.synopsis-box h3 {
+  margin-top: 0;
+  color: #ff6fae;
+}
+
+/* Buttons */
+.action-row {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-back {
+  flex: 1;
+  background: #ff4d4d;
+  border: none;
+  color: #fff;
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-borrow {
+  flex: 1;
+  background: linear-gradient(135deg, #ff7eb3, #8fd3f4);
+  border: none;
+  color: #fff;
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* =========================
+   form peminjaman
+   ========================= */
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #ffe6f0, #f3e8ff);
+  min-height: 100vh;
+}
+
+/* =========================
+   PAGE WRAPPER
+   ========================= */
+.borrow-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =========================
+   CARD
+   ========================= */
+.borrow-card {
+  background: #ffffff;
+  width: 420px;
+  padding: 28px 30px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================
+   TITLE
+   ========================= */
+.borrow-title {
+  text-align: center;
+  color: #ff5fa2;
+  margin-bottom: 22px;
+  font-size: 22px;
+}
+
+/* =========================
+   FORM
+   ========================= */
+.borrow-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.borrow-card label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.borrow-card input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.borrow-card input:focus {
+  outline: none;
+  border-color: #ff8cc6;
+  box-shadow: 0 0 0 2px rgba(255, 140, 198, 0.25);
+}
+
+/* =========================
+   BUTTON ROW
+   ========================= */
+.action-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+.btn-back,
+.btn-borrow {
+  flex: 1;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* BATAL */
+.btn-back {
+  background: #ff4d4d;
+  color: #fff;
+}
+
+.btn-back:hover {
+  background: #e63b3b;
+}
+
+/* SUBMIT */
+.btn-borrow {
+  background: linear-gradient(135deg, #ff8cc6, #8fd3f4);
+  color: #fff;
+}
+
+.btn-borrow:hover {
+  opacity: 0.9;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 480px) {
+  .borrow-card {
+    width: 90%;
+    padding: 24px;
+  }
+}
+
+/* =========================
+   HISTORY TABLE
+   ========================= */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.history-table th,
+.history-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.history-table th {
+  background: #ffe0f0;
+  color: #ff5fa2;
+  text-align: left;
+}
+
+.history-table tr:hover {
+  background: #fafafa;
 }

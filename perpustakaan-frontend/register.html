@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- SWEET ALERT -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="login-wrapper">
+  <div class="login-card">
+
+    <h2>Register</h2>
+
+    <input type="text" id="fullName" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+
+    <button type="button" onclick="register()">Register</button>
+
+    <p class="login-register-text">
+      Already have an account?
+      <a href="login.html">Login</a>
+    </p>
+
+  </div>
+</div>
+
+<script>
+const API_URL = "http://127.0.0.1:8000/api";
+
+function register() {
+  const name = document.getElementById("fullName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+  if (!name || !email || !password || !confirmPassword) {
+    Swal.fire({
+      icon: "warning",
+      title: "Form belum lengkap",
+      text: "Semua field wajib diisi"
+    });
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    Swal.fire({
+      icon: "error",
+      title: "Password tidak sama",
+      text: "Password dan konfirmasi password harus sama"
+    });
+    return;
+  }
+
+  fetch(`${API_URL}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({
+      name: name,
+      email: email,
+      password: password,
+      password_confirmation: confirmPassword
+    })
+  })
+  .then(res => res.json().then(data => ({ status: res.status, data })))
+  .then(({ status, data }) => {
+    if (status !== 201) {
+      Swal.fire({
+        icon: "error",
+        title: "Registrasi gagal",
+        text: data.message || "Email sudah terdaftar"
+      });
+      return;
+    }
+
+    Swal.fire({
+      icon: "success",
+      title: "Registrasi berhasil 🎉",
+      text: "Silakan login menggunakan akun kamu",
+      confirmButtonText: "Ke Login"
+    }).then(() => {
+      window.location.href = "login.html";
+    });
+  })
+  .catch(() => {
+    Swal.fire({
+      icon: "error",
+      title: "Server Error",
+      text: "Tidak bisa terhubung ke server"
+    });
+  });
+}
+</script>
+
+</body>
+</html>
